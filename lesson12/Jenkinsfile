@@ -4,7 +4,11 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+			    dir('lesson12') {
+				    sh "chmod -R 777 webbooks"
+				}
                 dir('lesson12/webbooks') {
+				    
                     sh "./mvnw -DskipTests clean package"
                 }
             }
