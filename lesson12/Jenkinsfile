@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 dir('lesson12/webbooks') {
-                    sh "mvn -DskipTests clean package"
+                    sh "mvnw -DskipTests clean package"
                 }
             }
 
