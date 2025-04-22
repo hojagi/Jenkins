@@ -1,23 +1,42 @@
 pipeline {
     agent any
+    environment {
+        DB_HOST = '192.168.56.112'
+        DB_PORT = '5432'
+        DB_NAME = 'db_webbooks'
+        DB_USER = 'postgres'
+        DB_PASSWORD = 'password'
+    }
 
     stages {
-        stage('Build') {
+        stage('Build and tests') {
             steps {
 			    dir('lesson12') {
 				    sh "chmod -R 777 webbooks"
 				}
                 dir('lesson12/webbooks') {
 				    
-                    sh "./mvnw -DskipTests clean package"
+                    //sh "./mvnw -DskipTests clean package"
+					sh "./mvnw package"
                 }
             }
 
             post {
-                // If Maven was able to run the tests, even if some of the test
-                // failed, record the test results and archive the jar file.
                 success {
-                    // junit '**/target/surefire-reports/TEST-*.xml'
+					echo 'Build and tests success complete'
+                }
+            }
+        }
+    stage('Build, create artefact and pipeline') {
+            steps {
+                dir('lesson12/webbooks') {
+                    //sh "./mvnw -DskipTests clean package"
+					sh "./mvnw package"
+                }
+            }
+
+            post {
+                success {
                     archiveArtifacts '**/target/*.jar'
                 }
             }
