@@ -1,15 +1,18 @@
 pipeline {
     agent any
-    environment {
-        DB_HOST = '192.168.56.112'
-        DB_PORT = '5432'
-        DB_NAME = 'db_webbooks'
-        DB_USER = 'postgres'
-        DB_PASSWORD = 'password'
-    }
+//    environment {
+//        DB_HOST = '192.168.56.112'
+//        DB_PORT = '5432'
+//        DB_NAME = 'db_webbooks'
+//        DB_USER = 'postgres'
+//        DB_PASSWORD = 'password'
+//    }
 
     stages {
         stage('Build and tests') {
+		    when {
+                branch 'PR-*'
+            }
             steps {
 			    dir('lesson12') {
 				    sh "chmod -R 777 webbooks"
@@ -28,6 +31,10 @@ pipeline {
             }
         }
         stage('Build, create artefact and pipeline') {
+		    when {
+                branch 'main'
+            }
+
             steps {
                 dir('lesson12/webbooks') {
                     //sh "./mvnw -DskipTests clean package"
