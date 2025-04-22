@@ -44,6 +44,7 @@ pipeline {
 
             post {
                 success {
+				    echo 'Build, create artefact and pipeline success'
                     archiveArtifacts '**/target/*.jar'
                 }
             }
