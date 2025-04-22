@@ -17,7 +17,7 @@ pipeline {
                 dir('lesson12/webbooks') {
 				    
                     //sh "./mvnw -DskipTests clean package"
-					sh "./mvnw package"
+					sh "./mvnw package -DDB.url=jdbc:postgresql://192.168.56.112:5432/webbooks"
                 }
             }
 
@@ -31,7 +31,7 @@ pipeline {
             steps {
                 dir('lesson12/webbooks') {
                     //sh "./mvnw -DskipTests clean package"
-					sh "./mvnw package"
+					sh "./mvnw package -DDB.url=jdbc:postgresql://192.168.56.112:5432/webbooks"
                 }
             }
 
