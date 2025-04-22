@@ -27,7 +27,7 @@ pipeline {
                 }
             }
         }
-    stage('Build, create artefact and pipeline') {
+        stage('Build, create artefact and pipeline') {
             steps {
                 dir('lesson12/webbooks') {
                     //sh "./mvnw -DskipTests clean package"
