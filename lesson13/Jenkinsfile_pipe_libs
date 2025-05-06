@@ -9,7 +9,7 @@ pipeline {
     }
 
     environment {
-        GITHUB_REPO_CRED = credentials("github-cred")
+        GITHUB_REPO_CRED = credentials("gitcred")
         GITHUB_REPO_OWNER = "hojagi"
         GITHUB_REPO_NAME = "Jenkins"
         GITHUB_REPO_URL = "https://github.com/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}.git"
