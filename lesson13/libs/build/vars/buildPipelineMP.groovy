@@ -79,11 +79,14 @@ def call(body) {
 						archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
 						sh 'ls'
 						sh 'pwd'
+						echo "CHANGE_ID: ${env.CHANGE_ID}"
+						def prNumber = env.CHANGE_ID
+						def buildDir = "/var/lib/jenkins/jobs/libraries/jobs/build_mult/branches/PR-${prNumber}/builds/${env.BUILD_NUMBER}/archive/apps/target"
 //						script {
 //						    def jarFile = findFiles(glob: '**/target/*.jar')[0]
 //						sh "cp ${jarFile} /var/lib/jenkins/app.jar"
 //						archiveArtifacts '**/target/*.jar'
-//						    sh "cp **/target/*.jar ~/app.jar"
+						sh "cp ${buildDir}/*.jar /home/vagrant"
 //					    }
                     }
 				}
