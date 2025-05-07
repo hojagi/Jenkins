@@ -17,11 +17,11 @@ def call(app, value) {
 //                    }
 //                }
 
-                post {
-                    success {
-			    		echo 'Build and tests success complete'
-                    }
-                }
+//                post {
+//                    success {
+//			    		echo 'Build and tests success complete'
+//                    }
+//                }
 			}
         }
     }

@@ -52,6 +52,11 @@ def call(body) {
                         }
                     }
                 }
+				post {
+				    success {
+			    		echo 'Build and tests success complete'
+                    }
+				}				
             }
 
             stage('build, upload') {
@@ -62,6 +67,11 @@ def call(body) {
                         }
                     }
                 }
+				post {
+				    success {
+			    		echo 'Build and upload success complete'
+                    }
+				}
             }
         }
     }
