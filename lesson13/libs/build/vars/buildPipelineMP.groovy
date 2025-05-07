@@ -80,7 +80,7 @@ def call(body) {
                         script {
                             // Получаем номер PR и создаем путь к директории артефактов
                             def prNumber = env.CHANGE_ID ?: 'unknown' // Установка значения по умолчанию
-                            def buildDir = "/var/lib/jenkins/jobs/libraries/jobs/build_mult/branches/PR-${prNumber}/builds/${env.BUILD_NUMBER}/archive/apps/target"
+                            def buildDir = "/var/lib/jenkins/jobs/libraries/jobs/build_mult/branches/PR-${prNumber}/builds/${env.BUILD_NUMBER}/archive/apps/webbooks/target"
                 
                             // Выводим переменные
                             echo "CHANGE_ID: ${env.CHANGE_ID}"
