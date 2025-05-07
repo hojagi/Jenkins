@@ -76,7 +76,10 @@ def call(body) {
 				post {
 				    success {
 			    		echo 'Build and upload success complete'
-						archiveArtifacts '**/target/*.jar'
+						archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+						def jarFile = findFiles(glob: '**/target/*.jar')[0]
+//						sh "cp ${jarFile} /var/lib/jenkins/app.jar"
+//						archiveArtifacts '**/target/*.jar'
 						sh "cp **/target/*.jar ~/app.jar"
                     }
 				}
