@@ -77,7 +77,8 @@ def call(body) {
 				    success {
 			    		echo 'Build and upload success complete'
 						archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
-						sh 'cp target/*.jar /home/vagrant/'
+						sh 'ls'
+						sh 'pwd'
 //						script {
 //						    def jarFile = findFiles(glob: '**/target/*.jar')[0]
 //						sh "cp ${jarFile} /var/lib/jenkins/app.jar"
