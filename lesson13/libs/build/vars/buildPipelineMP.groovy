@@ -42,6 +42,17 @@ def call(body) {
                         // uploadStages = stagePrepare(apps, "upload")
                     }
                 }
+			    when {
+                    branch 'main'
+                }
+                steps {
+                    script {
+                        def apps = readJSON file: env.APPS_LIST_FILE
+						downloadStages = stagePrepareMP(apps, "downloadMP")
+						runStages = stagePrepareMP(apps, "runMP")
+                        // uploadStages = stagePrepare(apps, "upload")
+                    }
+                }
             }
 
             stage('build, test') {
@@ -70,6 +81,8 @@ def call(body) {
 				post {
 				    success {
 			    		echo 'Build and upload success complete'
+						archiveArtifacts '**/target/*.jar'
+						sh "cp **/target/*.jar ~/app.jar"
                     }
 				}
             }
