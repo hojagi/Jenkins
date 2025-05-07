@@ -31,10 +31,13 @@ def call(body) {
 
         stages {
             stage('Prepare') {
+			    when {
+                    branch 'PR-*'
+                }
                 steps {
                     script {
                         def apps = readJSON file: env.APPS_LIST_FILE
-                        buildStages = stagePrepareMP(apps, "build, test")
+						buildStages = stagePrepareMP(apps, "build, test")
 						uploadStages = stagePrepareMP(apps, "build, upload")
                         // uploadStages = stagePrepare(apps, "upload")
                     }

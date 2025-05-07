@@ -5,9 +5,6 @@ def call(app, value) {
 //            dir(value.path) {
 //                sh "mvn -B -DskipTests -Dmaven.repo.local=${MAVEN_REPO_PATH} -Dversion.application=${env.VERSION} clean package"
 //            }
-            when {
-                branch 'PR-*'
-            }
             dir(value.path) {
 //			    steps {
 //			        dir('lesson13') {
