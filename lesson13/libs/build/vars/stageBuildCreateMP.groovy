@@ -12,8 +12,8 @@ def call(app, value) {
 //			    	    sh "chmod -R 777 webbooks"
 //				    }
 //                    dir('lesson13/webbooks') {
-				sh "chmod -R 777 value.path"
-			    sh "./mvnw package -DDB.url=jdbc:postgresql://192.168.56.112:5432/webbooks"
+//				sh "chmod -R 777 value.path"
+			    sh "mvn package -DDB.url=jdbc:postgresql://192.168.56.112:5432/webbooks"
 //                    }
 //                }
 
