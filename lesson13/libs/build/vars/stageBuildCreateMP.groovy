@@ -3,6 +3,7 @@ def call(app, value) {
         stage(app) {
 		
 //            dir(value.path) {
+
 //                sh "mvn -B -DskipTests -Dmaven.repo.local=${MAVEN_REPO_PATH} -Dversion.application=${env.VERSION} clean package"
 //            }
             dir(value.path) {
@@ -10,7 +11,8 @@ def call(app, value) {
 //			        dir('lesson13') {
 //			    	    sh "chmod -R 777 webbooks"
 //				    }
-//                    dir('lesson13/webbooks') {		    
+//                    dir('lesson13/webbooks') {
+				sh "chmod -R 777 value.path"
 			    sh "./mvnw package -DDB.url=jdbc:postgresql://192.168.56.112:5432/webbooks"
 //                    }
 //                }
