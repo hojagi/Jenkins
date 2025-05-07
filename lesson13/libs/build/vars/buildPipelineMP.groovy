@@ -31,25 +31,20 @@ def call(body) {
 
         stages {
             stage('Prepare') {
-			    when {
-                    branch 'PR-*'
-                }
+//			    when {
+//                    branch 'PR-*'
+//                }
                 steps {
                     script {
                         def apps = readJSON file: env.APPS_LIST_FILE
-						buildStages = stagePrepareMP(apps, "build, test")
-						uploadStages = stagePrepareMP(apps, "build, upload")
-                        // uploadStages = stagePrepare(apps, "upload")
-                    }
-                }
-			    when {
-                    branch 'main'
-                }
-                steps {
-                    script {
-                        def apps = readJSON file: env.APPS_LIST_FILE
-						downloadStages = stagePrepareMP(apps, "downloadMP")
-						runStages = stagePrepareMP(apps, "runMP")
+						if (env.BRANCH_NAME ==~ /PR-.*/) {
+						    buildStages = stagePrepareMP(apps, "build, test")
+						    uploadStages = stagePrepareMP(apps, "build, upload")
+						}
+						else if (env.BRANCH_NAME =='main') {
+						    buildStages = stagePrepareMP(apps, "build, test")
+						    uploadStages = stagePrepareMP(apps, "build, upload")
+						}						
                         // uploadStages = stagePrepare(apps, "upload")
                     }
                 }
