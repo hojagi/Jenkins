@@ -73,24 +73,42 @@ def call(body) {
                         }
                     }
                 }
+				
 				post {
-				    success {
-			    		echo 'Build and upload success complete'
-						archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
-						sh 'ls'
-						sh 'pwd'
-						echo "CHANGE_ID: ${env.CHANGE_ID}"
-						def prNumber = env.CHANGE_ID
-						def buildDir = "/var/lib/jenkins/jobs/libraries/jobs/build_mult/branches/PR-${prNumber}/builds/${env.BUILD_NUMBER}/archive/apps/target"
+                    success {
+					    archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+                        script {
+                            // Получаем номер PR и создаем путь к директории артефактов
+                            def prNumber = env.CHANGE_ID ?: 'unknown' // Установка значения по умолчанию
+                            def buildDir = "/var/lib/jenkins/jobs/libraries/jobs/build_mult/branches/PR-${prNumber}/builds/${env.BUILD_NUMBER}/archive/apps/target"
+                
+                            // Выводим переменные
+                            echo "CHANGE_ID: ${env.CHANGE_ID}"
+                            echo "Build Directory: ${buildDir}"
+
+                            // Копируем JAR файл, если он существует
+                            sh "if [ -d '${buildDir}' ]; then cp ${buildDir}/*.jar /home/vagrant/; else echo 'Directory does not exist: ${buildDir}'; fi"
+                            }
+                        }
+                    }
+//				post {
+//				    success {
+//			    		echo 'Build and upload success complete'
+//						archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+//						sh 'ls'
+//						sh 'pwd'
+//						sh 'echo "CHANGE_ID: ${env.CHANGE_ID}"'
+//						sh 'def prNumber = env.CHANGE_ID'
+//						sh 'def buildDir = "/var/lib/jenkins/jobs/libraries/jobs/build_mult/branches/PR-${prNumber}/builds/${env.BUILD_NUMBER}/archive/apps/target"'
 //						script {
 //						    def jarFile = findFiles(glob: '**/target/*.jar')[0]
 //						sh "cp ${jarFile} /var/lib/jenkins/app.jar"
 //						archiveArtifacts '**/target/*.jar'
-						sh "cp ${buildDir}/*.jar /home/vagrant"
+//						sh "cp ${buildDir}/*.jar /home/vagrant"
 //					    }
-                    }
-				}
-            }
+//                    }
+//				}
+           }
         }
     }
 }
