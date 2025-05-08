@@ -66,7 +66,7 @@ def call(body) {
             stage('run') {
                 steps {
                     script {
-                        sh "ssh -i /var/lib/jenkins/workspace/private_key ${remoteUser}@${remoteHost} 'systemctl restart webbooks.service'"
+                        sh "ssh -i /var/lib/jenkins/workspace/private_key ${remoteUser}@${remoteHost} 'sudo systemctl restart webbooks.service'"
                         }
                     }
                 }
