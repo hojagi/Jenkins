@@ -31,21 +31,16 @@ def call(body) {
 
         stages {
             stage('Prepare') {
-//			    when {
-//                    branch 'PR-*'
-//                }
                 steps {
                     script {
                         def apps = readJSON file: env.APPS_LIST_FILE
 						if (env.BRANCH_NAME ==~ /PR-.*/) {
 						    buildStages = stagePrepareMP(apps, "build, test")
-						    uploadStages = stagePrepareMP(apps, "build, upload")
 						}
 						else if (env.BRANCH_NAME =='main') {
 						    buildStages = stagePrepareMP(apps, "build, test")
 						    uploadStages = stagePrepareMP(apps, "build, upload")
 						}						
-                        // uploadStages = stagePrepare(apps, "upload")
                     }
                 }
             }
@@ -91,23 +86,6 @@ def call(body) {
                             }
                         }
                     }
-//				post {
-//				    success {
-//			    		echo 'Build and upload success complete'
-//						archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
-//						sh 'ls'
-//						sh 'pwd'
-//						sh 'echo "CHANGE_ID: ${env.CHANGE_ID}"'
-//						sh 'def prNumber = env.CHANGE_ID'
-//						sh 'def buildDir = "/var/lib/jenkins/jobs/libraries/jobs/build_mult/branches/PR-${prNumber}/builds/${env.BUILD_NUMBER}/archive/apps/target"'
-//						script {
-//						    def jarFile = findFiles(glob: '**/target/*.jar')[0]
-//						sh "cp ${jarFile} /var/lib/jenkins/app.jar"
-//						archiveArtifacts '**/target/*.jar'
-//						sh "cp ${buildDir}/*.jar /home/vagrant"
-//					    }
-//                    }
-//				}
            }
         }
     }
