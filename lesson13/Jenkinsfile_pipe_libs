@@ -1,0 +1,52 @@
+
+@Library('build') _
+
+pipeline {
+    agent any
+
+    tools {
+        maven "3.9.2"
+    }
+
+    environment {
+        GITHUB_REPO_CRED = credentials("gitcred")
+        GITHUB_REPO_OWNER = "hojagi"
+        GITHUB_REPO_NAME = "Jenkins"
+        GITHUB_REPO_URL = "https://github.com/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}.git"
+        VERSION = "1.0.${BUILD_NUMBER}" // global ENVs  ${YOUR_JENKINS_URL}/pipeline-syntax/globals#env
+        MAVEN_REPO_PATH = "${WORKSPACE}/.m2/repository"
+        APPS_LIST_FILE = "apps/apps.json"
+    }
+
+    stages {
+        stage('Prepare') {
+            steps {
+                script {
+                    def apps = readJSON file: env.APPS_LIST_FILE
+                    buildStages = stagePrepare(apps, "build")
+                    // uploadStages = stagePrepare(apps, "upload")
+                }
+            }
+        }
+
+        stage('Build') {
+            steps {
+                script {
+                    buildStages.each { build ->
+                        parallel build
+                    }
+                }
+            }
+        }
+
+        // stage('Upload') {
+        //     steps {
+        //         script {
+        //             uploadStages.each { upload ->
+        //                 parallel upload
+        //             }
+        //         }
+        //     }
+        // }
+    }
+}

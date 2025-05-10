@@ -34,16 +34,20 @@ pipeline {
 		    when {
                 branch 'main'
             }
-
             steps {
+			    dir('lesson12') {
+				    sh "chmod -R 777 webbooks"
+				}
                 dir('lesson12/webbooks') {
                     //sh "./mvnw -DskipTests clean package"
 					sh "./mvnw package -DDB.url=jdbc:postgresql://192.168.56.112:5432/webbooks"
+					build job: 'copy and run jar', wait: false
                 }
             }
-
+ 
             post {
                 success {
+				    echo 'Build, create artefact and pipeline success'
                     archiveArtifacts '**/target/*.jar'
                 }
             }
